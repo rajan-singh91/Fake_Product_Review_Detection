@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Review History</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Review History</h1>
+
+    <br>
+
+    <div style="text-align:center; margin-bottom:20px;">
+
+        <a href="/">
+            <button>🏠 Home</button>
+        </a>
+
+        <a href="/clear">
+            <button style="background:red;">
+                🗑 Clear History
+            </button>
+        </a>
+
+    </div>
+
+
+    {% if history %}
+
+    <table>
+
+        <tr>
+
+            <th>ID</th>
+
+            <th>Review</th>
+
+            <th>Result</th>
+
+            <th>Confidence</th>
+
+            <th>Date & Time</th>
+
+        </tr>
+
+        {% for row in history %}
+
+        <tr>
+
+            <td>{{ row[0] }}</td>
+
+            <td style="text-align:left;">{{ row[1] }}</td>
+
+            <td>
+
+                {% if row[2] == "real" %}
+
+                    <span style="color:green;font-weight:bold;">
+                        Real
+                    </span>
+
+                {% else %}
+
+                    <span style="color:red;font-weight:bold;">
+                        Fake
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+            <td>{{ row[3] }}%</td>
+
+            <td>{{ row[4] }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+
+    <h2 style="text-align:center;color:gray;">
+
+        No Review History Found
+
+    </h2>
+
+    {% endif %}
+
+    <br><br>
+
+    <div style="text-align:center;">
+
+        <a href="/">
+
+            ← Back to Home
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

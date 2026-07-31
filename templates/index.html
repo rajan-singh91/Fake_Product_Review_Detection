@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Product Review Detection</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Fake Product Review Detection</h1>
+
+    <p class="subtitle">
+        Enter a product review to check whether it is Fake or Real
+    </p>
+
+    <!-- Dashboard -->
+
+    <div class="dashboard">
+
+        <div class="card total">
+            <h3>Total Reviews</h3>
+            <h2>{{ total }}</h2>
+        </div>
+
+        <div class="card real">
+            <h3>Real Reviews</h3>
+            <h2>{{ real }}</h2>
+        </div>
+
+        <div class="card fake">
+            <h3>Fake Reviews</h3>
+            <h2>{{ fake }}</h2>
+        </div>
+
+    </div>
+
+    <!-- Review Form -->
+
+    <form action="/predict" method="POST">
+
+        <textarea
+            name="review"
+            placeholder="Enter your product review here..."
+            required>{{ review if review else "" }}</textarea>
+
+        <br>
+
+        <button type="submit">Check Review</button>
+
+    </form>
+
+    <!-- Prediction Result -->
+
+    {% if prediction %}
+
+    <div class="result">
+
+        <h2>Prediction Result</h2>
+
+        <p><b>Review:</b> {{ review }}</p>
+
+        {% if prediction == "real" %}
+
+            <h3 style="color:green;">
+                Status : REAL ✅
+            </h3>
+
+        {% else %}
+
+            <h3 style="color:red;">
+                Status : FAKE ❌
+            </h3>
+
+        {% endif %}
+
+        <h3>Confidence : {{ confidence }}%</h3>
+
+    </div>
+
+    {% endif %}
+
+    <!-- Pie Chart -->
+
+    {% if total > 0 %}
+
+    <div class="chart">
+
+        <h2>Review Analytics</h2>
+
+        <img src="{{ url_for('static', filename='chart.png') }}" alt="Chart">
+
+    </div>
+
+    {% endif %}
+
+    <br>
+
+    <div style="text-align:center;">
+
+        <a href="/history">
+            <button type="button">
+                View History
+            </button>
+        </a>
+
+        <a href="/about">
+            <button type="button">
+                About
+            </button>
+        </a>
+
+        <a href="/logout">
+            <button type="button" style="background:red;">
+                Logout
+            </button>
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
